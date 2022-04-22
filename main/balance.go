@@ -10,9 +10,9 @@ import (
 )
 
 type Message struct {
-	jsonrpc string
-	id      int
-	result  string
+	Jsonrpc string `json:"jsonrpc"`
+	Id      int    `json:"id"`
+	Result  string `json:"result"`
 }
 
 func main() {
@@ -32,13 +32,9 @@ func main() {
 
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, _ := ioutil.ReadAll(resp.Body)
 
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(body))
+	fmt.Println(string(body)) // {"jsonrpc":"2.0","id":1,"result":"0x3d69b16b62d47b5ea0"}
 
 	var m Message
 
@@ -48,5 +44,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(m.result) // 为什么没放到m中去？寻求帮助 https://go.dev/blog/json
+	fmt.Println(m.Result) // 0x3d69b16b62d47b5ea0  16进制转10进制即可
 }
